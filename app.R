@@ -13,7 +13,7 @@ library(shiny)
 ui <- fluidPage(
 
     # Application title
-    titlePanel("Old Faithful Geyser Data"),
+    titlePanel("Titanic"),
 
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
@@ -27,7 +27,7 @@ ui <- fluidPage(
 
         # Show a plot of the generated distribution
         mainPanel(
-           plotOutput("distPlot")
+           plotOutput("piePlot")
         )
     )
 )
@@ -35,13 +35,17 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
 
-    output$distPlot <- renderPlot({
+    output$piePlot <- renderPlot({
+        # Simple Pie Chart
+        data("Titanic")
+        
         # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
+        x    <- Titanic
+        slices <- c(sum(x[, , , Survived = "Yes"]), sum(x[, , , Survived = "No"]))
+        lbls <- c("Alive", "Dead")
 
         # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white')
+        pie(slices,lbls)
     })
 }
 
