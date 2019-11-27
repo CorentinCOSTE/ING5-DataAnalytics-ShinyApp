@@ -7,7 +7,12 @@
 #    http://shiny.rstudio.com/
 #
 
+
+#Import library
 library(shiny)
+
+#Import data
+data("Titanic")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -18,16 +23,21 @@ ui <- fluidPage(
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
         sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
+            h4("First Set (Blue)"),
+            selectInput('survived', 'Survived', c("Yes", "No"), selected = "Yes"),
+            selectInput('age', 'Age', c("Child", "Adult"), selected = "Adult"),
+            selectInput('sex', 'Sex', c("Male", "Female"), selected = "Male"),
+            br(),
+            
+            h4("Second Set (Red)"),
+            selectInput('survived2', 'Survived', c("Yes", "No"), selected = "No"),
+            selectInput('age2', 'Age', c("Child", "Adult"), selected = "Adult"),
+            selectInput('sex2', 'Sex', c("Male", "Female"), selected = "Male")
         ),
 
         # Show a plot of the generated distribution
         mainPanel(
-           plotOutput("piePlot")
+           plotOutput("barPlot")
         )
     )
 )
@@ -35,17 +45,12 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
 
-    output$piePlot <- renderPlot({
-        # Simple Pie Chart
-        data("Titanic")
+    output$barPlot <- renderPlot({
+        # Simple Bar Chart
         
-        # generate bins based on input$bins from ui.R
         x    <- Titanic
-        slices <- c(sum(x[, , , Survived = "Yes"]), sum(x[, , , Survived = "No"]))
-        lbls <- c("Alive", "Dead")
-
-        # draw the histogram with the specified number of bins
-        pie(slices,lbls)
+        values <- rbind( x[, Sex = input$sex, Age = input$age, Survived = input$survived], x[, Sex = input$sex2, Age = input$age2, Survived = input$survived2] ) 
+        barplot(values, main = "Survived by Class", names.arg = names(values), xlab = "Class", ylab = "Counts", col = c("darkblue","red"), beside=TRUE)
     })
 }
 
