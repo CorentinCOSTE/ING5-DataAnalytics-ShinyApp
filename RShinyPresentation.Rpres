@@ -8,7 +8,7 @@ Useful links
 ========================================================
 
 - [Shiny app deployed](https://corentincoste.shinyapps.io/ing5-dataanalytics-shinyapp/)
-- [R Presentation]()
+- [R Presentation](http://rpubs.com/CorentinCOSTE/554443)
 - [GitHub of the project](https://github.com/CorentinCOSTE/ING5-DataAnalytics-ShinyApp)
 
 Titanic dataset
