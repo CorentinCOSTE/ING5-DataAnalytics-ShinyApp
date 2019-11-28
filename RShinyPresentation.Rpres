@@ -1,0 +1,67 @@
+Titanic dashboard R Shiny application
+========================================================
+author: Corentin Isma Gaël
+date: 28/11
+autosize: true
+
+Useful links
+========================================================
+
+- [Shiny app deployed](https://corentincoste.shinyapps.io/ing5-dataanalytics-shinyapp/)
+- [R Presentation]()
+- [GitHub of the project](https://github.com/CorentinCOSTE/ING5-DataAnalytics-ShinyApp)
+
+Titanic dataset
+========================================================
+
+```{r, echo=FALSE}
+knitr::kable(Titanic[, , Age = "Adult", Survived = "Yes"])
+knitr::kable(Titanic[, , Age = "Child", Survived = "Yes"])
+```
+
+***
+
+```{r, echo=FALSE}
+knitr::kable(Titanic[, , Age = "Adult", Survived = "No"])
+knitr::kable(Titanic[, , Age = "Child", Survived = "No"])
+```
+
+User inputs for the dashboard
+========================================================
+
+One can choose a set of values for these field, and compare it to another set of values
+
+- **Survived**
+- **Age**
+- **Sex**
+
+Example : *Yes/Adult/Female* v.s. *No/Adult/Female*
+
+Example of plot
+========================================================
+left:30%
+**Blue bars:** How many female adults survived the Titanic
+
+**Red bars:** How many female adults did not survive the Titanic
+
+***
+
+```{r, echo=FALSE}
+x    <- Titanic
+values <- rbind( x[, Sex = "Female", Age = "Adult", Survived = "Yes"], x[, Sex = "Female", Age = "Adult", Survived = "No"] ) 
+barplot(values, main = "Survived by Class", names.arg = names(values), xlab = "Class", ylab = "Counts", col = c("darkblue","red"), beside=TRUE)
+```
+
+
+Explaination of the example
+========================================================
+left:30%
+We can observe that a woman chance of surviving increases as her class increases.
+
+***
+
+```{r, echo=FALSE}
+x    <- Titanic
+values <- rbind( x[, Sex = "Female", Age = "Adult", Survived = "Yes"], x[, Sex = "Female", Age = "Adult", Survived = "No"] ) 
+barplot(values, main = "Survived by Class", names.arg = names(values), xlab = "Class", ylab = "Counts", col = c("darkblue","red"), beside=TRUE)
+```
