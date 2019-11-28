@@ -23,13 +23,13 @@ ui <- fluidPage(
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
         sidebarPanel(
-            h4("First Set (Blue)"),
-            selectInput('survived', 'Survived', c("Yes", "No"), selected = "Yes"),
-            selectInput('age', 'Age', c("Child", "Adult"), selected = "Adult"),
-            selectInput('sex', 'Sex', c("Male", "Female"), selected = "Male"),
+            h4("First Set (Blue)"), # Title of the first set of dropdowns
+            selectInput('survived', 'Survived', c("Yes", "No"), selected = "Yes"), #survived is our variable, Survived the title of the dropdown, c("Yes", "No") is the choice of the dropdown, Selected is the value by default
+            selectInput('age', 'Age', c("Child", "Adult"), selected = "Adult"), #age is our variable, Age the title of the dropdown, c("Child", "Adult") is the choice of the dropdown, Selected is the value by default
+            selectInput('sex', 'Sex', c("Male", "Female"), selected = "Male"), #sex is our variable, Sex the title of the dropdown, c("Male", "Female") is the choice of the dropdown, Selected is the value by default
             br(),
             
-            h4("Second Set (Red)"),
+            h4("Second Set (Red)"), # Title of the second set of dropdowns
             selectInput('survived2', 'Survived', c("Yes", "No"), selected = "No"),
             selectInput('age2', 'Age', c("Child", "Adult"), selected = "Adult"),
             selectInput('sex2', 'Sex', c("Male", "Female"), selected = "Male")
@@ -47,9 +47,11 @@ server <- function(input, output) {
 
     output$barPlot <- renderPlot({
         # Simple Bar Chart
-        
+        #stocking the data in a varible  x
         x    <- Titanic
-        values <- rbind( x[, Sex = input$sex, Age = input$age, Survived = input$survived], x[, Sex = input$sex2, Age = input$age2, Survived = input$survived2] ) 
+        #retrieving the user's input
+        values <- rbind( x[, Sex = input$sex, Age = input$age, Survived = input$survived], x[, Sex = input$sex2, Age = input$age2, Survived = input$survived2] )
+        #ploting the data according to the input
         barplot(values, main = "Survived by Class", names.arg = names(values), xlab = "Class", ylab = "Counts", col = c("darkblue","red"), beside=TRUE)
     })
 }
